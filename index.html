@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>OpenAI API余额查询</title>
+
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: black; /* 设置背景渐变色 */
+            color: #fff; /* 设置文字颜色 */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            color: #FEB013; /* 设置标题颜色 */
+            text-shadow: 2px 2px #000; /* 设置标题阴影效果 */
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+            color: #FEB013; /* 设置标签颜色 */
+        }
+
+        input[type="text"] {
+            width: 300px;
+            height: 30px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 5px;
+            font-size: 16px;
+            outline: none;
+            background-color: #1C1C1C; /* 设置输入框背景色 */
+            color: #fff; /* 设置输入框文字颜色 */
+        }
+
+        button {
+            height: 36px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #FEB013;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #FFC44D;
+        }
+
+        #result {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 18px;
+            color: #FEB013; /* 设置结果文本颜色 */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>OpenAI API余额查询</h1>
+
+    <form onsubmit="return false;">
+        <label for="api_key">请输入API KEY:</label>
+        <input type="text" name="api_key" id="api_key">
+        <button onclick="getBalance()">查询余额</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function getBalance() {
+            const apiKey = document.getElementById("api_key").value;
+            const url = 'https://api.openai.com/dashboard/billing/credit_grants';
+            const headers = {
+                "Authorization": `Bearer ${apiKey}`,
+                "Content-Type": "application/json"
+            };
+
+            const request = new XMLHttpRequest();
+            request.open('GET', url, true);
+            request.setRequestHeader('Authorization', headers.Authorization);
+
+            request.onload = function () {
+                if (request.status === 200) {
+                    const data = JSON.parse(request.response);
+                    const total_granted = data.total_granted;
+                    const total_used = data.total_used;
+                    const total_available = data.total_available;
+
+                    const resultDiv = document.getElementById("result");
+                    resultDiv.innerHTML = `您查询的API KEY共计 ${total_granted} 美元，已使用 ${total_used} 美元，剩余 ${total_available} 美元。`
+                } else {
+                    const resultDiv = document.getElementById("result");
+                    resultDiv.innerHTML = "获取余额失败。";
+                }
+            };
+
+            request.send();
+        }
+    </script>
+</body>
+
+</html>
