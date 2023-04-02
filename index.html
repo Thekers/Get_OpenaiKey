@@ -1,117 +1,298 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-
+<html lang="zh-Hans">
 <head>
     <meta charset="UTF-8">
-    <title>OpenAI API余额查询</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OpenAI Key余额查询</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
     <style>
-        body {
-            font-family: "Microsoft YaHei", sans-serif;
-            margin: 0;
-            padding: 0;
-            background: black; /* 设置背景渐变色 */
-            color: #fff; /* 设置文字颜色 */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-
-        h1 {
-            text-align: center;
-            margin-top: 50px;
-            color: #FEB013; /* 设置标题颜色 */
-            text-shadow: 2px 2px #000; /* 设置标题阴影效果 */
-        }
-
-        form {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 30px;
-        }
-
-        label {
-            font-size: 18px;
-            margin-right: 10px;
-            color: #FEB013; /* 设置标签颜色 */
-        }
-
-        input[type="text"] {
-            width: 300px;
-            height: 30px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 5px;
-            font-size: 16px;
-            outline: none;
-            background-color: #1C1C1C; /* 设置输入框背景色 */
-            color: #fff; /* 设置输入框文字颜色 */
-        }
-
-        button {
-            height: 36px;
-            margin-left: 10px;
-            border: none;
-            border-radius: 5px;
-            color: #fff;
-            background-color: #FEB013;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #FFC44D;
-        }
-
-        #result {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 18px;
-            color: #FEB013; /* 设置结果文本颜色 */
+        .loader {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 2s linear infinite;
+            display: none;
         }
     </style>
+<style>
+body {
+    background: url('https://pic3.zhimg.com/v2-a3cab7b5bb88b9eb83370f1ec3db6f86_r.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-color: #f5f5f5;
+}
+
+.content {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.63);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+label {
+    font-size: 24px;
+    color: #ff089e;
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    margin-right: 10px;
+    flex: 1;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #4299e5;
+}
+
+
+button[type="submit"] {
+    background-color: #4299e5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+    background-color: #357dbf;
+    outline: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-gap: 20px;
+    margin-top: 40px;
+}
+
+.grid-item {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.grid-item:hover {
+    transform: translateY(-10px);
+}
+
+.grid-item p:nth-child(1) {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #4299e5;
+    animation: pulse 1s ease-in-out infinite alternate;
+}
+
+.grid-item p:nth-child(2) {
+    font-size: 16px;
+    color: #666;
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+.text-gradient {
+    background-image: linear-gradient(to right, #4299e5, #00c458);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.text-gradient {
+  animation: gradient-animation 2s linear infinite;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@keyframes gradient-animation {
+  from {background-image: linear-gradient(to right, #4299e5, #00c458);}
+  to {background-image: linear-gradient(to right, #00c458, #4299e5);}
+}
+
+</style>
 </head>
-
-<body>
-    <h1>OpenAI API余额查询</h1>
-
-    <form onsubmit="return false;">
-        <label for="api_key">请输入API KEY:</label>
-        <input type="text" name="api_key" id="api_key">
-        <button onclick="getBalance()">查询余额</button>
-    </form>
-
-    <div id="result"></div>
-
+<body class="bg-transparent font-sans">
+    <div class="mx-auto max-w-7xl px-0">
+    <div class="container justify-center items-center">
+        <div class="content">
+           <h1 class="text-3xl font-semibold text-center mb-8 text-gradient">OpenAI 余额查询</h1>
+            <form method="POST" onsubmit="event.preventDefault(); checkOpenAICredit();" class="flex items-center mb-10">
+                <label for="api_key" class="w-28 mr-4 text-gradient">API密钥:</label>
+                <input type="text" placeholder="请输入您的API密钥:" name="api_key" id="api_key"
+                    class="border border-gray-400 rounded px-2 py-1 w-full max-w-md focus:outline-none focus:border-blue-500" required>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full ml-4">
+                <span style="display:inline-block; width: 50px;">查询</span>
+                </button>
+                <div id="loader" class="loader ml-4" style="display:none;"></div>
+            </form>
+            <div id="result"></div>
+        </div>
+    </div>
+    </div>
     <script>
-        function getBalance() {
-            const apiKey = document.getElementById("api_key").value;
-            const url = 'https://api.unchatgp.com/dashboard/billing/credit_grants';
-            const headers = {
-                "Authorization": `Bearer ${apiKey}`,
-                "Content-Type": "application/json"
-            };
 
-            const request = new XMLHttpRequest();
-            request.open('GET', url, true);
-            request.setRequestHeader('Authorization', headers.Authorization);
+function showLoader() {
+    document.getElementById("loader").style.display = "inline-block";
+}
 
-            request.onload = function () {
-                if (request.status === 200) {
-                    const data = JSON.parse(request.response);
-                    const total_granted = data.total_granted;
-                    const total_used = data.total_used;
-                    const total_available = data.total_available;
+function hideLoader() {
+    document.getElementById("loader").style.display = "none";
+}
 
-                    const resultDiv = document.getElementById("result");
-                    resultDiv.innerHTML = `您查询的API KEY共计 ${total_granted} 美元，已使用 ${total_used} 美元，剩余 ${total_available} 美元。`
-                } else {
-                    const resultDiv = document.getElementById("result");
-                    resultDiv.innerHTML = "获取余额失败。";
-                }
-            };
+function displayResult(data) {
+    if (data.status === "success") {
+        document.getElementById("result").innerHTML = `
+            <div class="grid grid-cols-3 gap-4">
+                <div class="grid-item bg-gray-100 p-6 rounded-lg text-center">
+                    <p class="text-2xl font-semibold">${data.total_granted}</p>
+                    <p class="text-gray-600">总额度</p>
+                </div>
+                <div class="grid-item bg-gray-100 p-6 rounded-lg text-center">
+                    <p class="text-2xl font-semibold">${parseFloat(data.total_used).toFixed(3)}</p>
+                    <p class="text-gray-600">已使用额度</p>
+                </div>
+                <div class="grid-item bg-gray-100 p-6 rounded-lg text-center">
+                    <p class="text-2xl font-semibold">${parseFloat(data.total_available).toFixed(3)}</p>
+                    <p class="text-gray-600">剩余可用额度</p>
+                </div>
+            </div>
+        `;
+    } else {
+        alert("您的账户已被封禁，请登录OpenAI进行查看。");
+    }
+}
 
-            request.send();
-        }
+
+function checkOpenAICredit() {
+    var apiKey = document.getElementById("api_key").value;
+
+    if (!apiKey.startsWith("sk-")) {
+        alert("无效的API密钥，请检查您的API密钥是否正确。");
+        return;
+    }
+
+    showLoader();
+    checkBilling(apiKey)
+    .then(data => {
+        displayResult({
+        status: "success",
+        total_granted: data[0],
+        total_used: data[1],
+        total_available: data[2]
+        });
+        hideLoader();
+    })
+    .catch(error => {
+        alert("您的账户已被封禁，请登录OpenAI进行查看。");
+        hideLoader();
+    });
+}
+
+async function checkBilling(apiKey) {
+  // 计算起始日期和结束日期
+  const now = new Date();
+  const startDate = new Date(now - 90 * 24 * 60 * 60 * 1000);
+  const endDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+  // 设置API请求URL和请求头
+  const urlSubscription = 'https://api.unchatgp.com/v1/dashboard/billing/subscription'; // 查是否订阅
+  const urlBalance = 'https://api.unchatgp.com/dashboard/billing/credit_grants'; // 查普通账单
+  const urlUsage = `https://api.unchatgp.com/v1/dashboard/billing/usage?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}`; // 查使用量
+  const headers = {
+    "Authorization": "Bearer " + apiKey,
+    "Content-Type": "application/json"
+  };
+
+  try {
+    // 获取API限额
+    let response = await fetch(urlSubscription, {headers});
+    if (!response.ok) {
+      console.log("您的账户已被封禁，请登录OpenAI进行查看。");
+      return;
+    }
+    const subscriptionData = await response.json();
+    const totalAmount = subscriptionData.hard_limit_usd;
+
+    // 获取已使用量
+    response = await fetch(urlUsage, {headers});
+    const usageData = await response.json();
+    const totalUsage = usageData.total_usage / 100;
+
+    // 计算剩余额度
+    const remaining = totalAmount - totalUsage;
+
+    // 输出总用量、总额及余额信息
+    console.log(`Total Amount: ${totalAmount.toFixed(2)}`);
+    console.log(`Used: ${totalUsage.toFixed(2)}`);
+    console.log(`Remaining: ${remaining.toFixed(2)}`);
+
+    return [totalAmount, totalUsage, remaining];
+  } catch (error) {
+    console.error(error);
+    return [null, null, null];
+  }
+}
+
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+
     </script>
 </body>
 </html>
