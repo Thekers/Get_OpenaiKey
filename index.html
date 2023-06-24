@@ -1,101 +1,16 @@
 <!DOCTYPE html>
-<!--230402修复,加了去重功能适应了官方查询接口变化-->
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>API-KEY信息查询</title>
-		<link rel="icon" href="data:image/png;base64,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
-">
-    <style>
 
-      table {
-        margin: auto;
-        border-collapse: collapse;
-      }
-      th,
-      td {
-        padding: 8px;
-        text-align: center;
-        color: #000000;
-        border: 1px solid #000000;
-      }
-      th:first-child,
-      td:first-child {
-        width: 520px;
-      }
-      h1 {
-        text-align: center;
-        color: #000000;
-      }
-      form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-      textarea#api-key-input {
-        width: 560px;
-        font-size: 16px;
-        padding: 10px;
-        margin-right: 10px;
-        border-radius: 5px;
-        border: none;
-        resize: vertical;
-        rows: 8;
-      }
-      select#api-url-select,
-      input#custom-url-input {
-        width: 300px;
-        height: 50px;
-        font-size: 16px;
-        background-color: #212121;
-        border-radius: 5px;
-        color: #ffffff;
-        border: none;
-        margin-right: 10px;
-      }
-      input#custom-url-input {
-        display: none;
-      }
-      button {
-        height: 50px;
-        font-size: 16px;
-        background-color: #ff8c00;
-        color: #ffffff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      .status-ok {
-        color: #2d8d2d;
-      }
-      .status-error {
-        color: #ed0808;
-      }
-      tr:nth-child(even) {
-        /* 将偶数行背景色改为深蓝色 */
-        background-color: #f1d39c;
-      }
-      tr:nth-child(odd) {
-        /* 将偶数行背景色改为深蓝色 */
-        background-color: #f1d39c;
-      }
+<head>
+	<title>OpenAI API Key Check</title>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1">
+	<style>
 
-
-
-
-    </style>
-
-<style>
-body {
-    background: url('https://pic3.zhimg.com/v2-a3cab7b5bb88b9eb83370f1ec3db6f86_r.jpg') no-repeat center center fixed;
-    background-size: cover;
-    background-color: #f5f5f5;
-}
-
-.content {
+.contents {
     width: 100%;
-    max-width: 800px;
+    max-width: 1600px;
     margin: auto;
     padding: 40px;
     border-radius: 8px;
@@ -103,177 +18,20 @@ body {
     background-color: rgba(0, 0, 0, 0.63);
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
-}
+.btn-plain{ 
+background-color: transparent;
+ border: none; color: #333;
+ font-size: 16px; cursor: pointer;
+ } 
+.btn-plain:hover { color: #666; }
 
-h1 {
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 30px;
-}
-
-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-label {
-    font-size: 24px;
-    color: #ff089e;
-    margin-right: 10px;
-}
-
-input[type="text"] {
-    border: 2px solid #ddd;
-    border-radius: 6px;
-    padding: 12px 16px;
-    font-size: 16px;
-    background-color: #f9f9f9;
-    margin-right: 10px;
-    flex: 1;
-    transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus {
-    outline: none;
-    border-color: #4299e5;
-}
-
-
-button[type="submit"] {
-    background-color: #4299e5;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    padding: 14px 28px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-button[type="submit"]:hover,
-button[type="submit"]:focus {
-    background-color: #357dbf;
-    outline: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    grid-gap: 20px;
-    margin-top: 40px;
-}
-
-.grid-item {
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-    background-color:#fff;
-}
-
-.grid-item:hover {
-    transform: translateY(-10px);
-}
-
-.grid-item p:nth-child(1) {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #4299e5;
-    animation: pulse 1s ease-in-out infinite alternate;
-}
-
-.grid-item p:nth-child(2) {
-    font-size: 16px;
-    color: #666;
-}
-
-@keyframes pulse {
-    from {
-        opacity: 0.6;
-        transform: scale(1);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1.2);
-    }
-}
-.text-gradient {
-    background-image: linear-gradient(to right, #4299e5, #00c458);
-    -webkit-background-clip: text;
-    color: transparent;
-}
-
-.text-gradient {
-  animation: gradient-animation 2s linear infinite;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-@keyframes gradient-animation {
-  from {background-image: linear-gradient(to right, #4299e5, #00c458);}
-  to {background-image: linear-gradient(to right, #00c458, #4299e5);}
-}
-
-#result-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 20px;
-  font-size: 14px;
-}
-
-#result-table th {
-  background-color: #6fa83a;
-  color: #000;
-  font-weight: 400;
-  height: 20px;
-  padding: 10px 25px;
-  text-align: left;
-  border: 1px solid #090303;
-}
-
-#result-table td {
-  
-  height: 20px;
-  
-  text-align: left;
-}
-
-#result-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-#result-table .table-header {
-  width: 25%;
-}
-
-#result-table .table-data {
-  width: 25%;
-  font-weight: bold;
-  color: #333;
-}
-.form-group {
-  margin-bottom: 1rem;
-}
 
 .form-control {
   font-family: inherit;
   font-size: 15px;
   display: block;
   width: 100%;
-  height: calc(2.5rem + 2px);
+  height: calc(2.5rem + 80px);
   padding: 0.375rem 0.75rem;
   line-height: 1.5;
   color: #495057;
@@ -311,344 +69,530 @@ button[type="submit"]:focus {
   color: #999;
 }
 
+		body {
+			
+    background: url('https://pic3.zhimg.com/v2-a3cab7b5bb88b9eb83370f1ec3db6f86_r.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-color: #f5f5f5;
 
-</style>
-  </head>
-  <body>
-<div class="content">
-<h1 class="text-3xl font-semibold text-center mb-8 text-gradient">OpenAI API余额查询(批量)</h1>
-    <form>
-<label for="api_key" class="w-28 mr-4 text-gradient">API密钥:</label>
-      <textarea id="api-key-input" class="form-control" placeholder="请输入API秘钥，每行一个秘钥:"></textarea>
-<div style="display: none;">
-        <select id="api-url-select">
-          <option value="https://openai.1rmb.tk">【社区反代】 https://openai.1rmb.tk</option>
-          <option value="https://api.openai.com">【官方,需科学】 https://api.openai.com</option>
-          <option value="custom">自定义 ...</option>
-        </select>
-        <input type="text" id="custom-url-input" placeholder="请输入自定义API链接" />
-      </div>
-      <button type="button" style="display:inline-block; width: 100px;" onclick="sendRequest()">查询</button>
-    </form>
-    <table id="result-table">
-      <thead>
-        <tr>
-          <th>API KEY</th>
-          <th style="width: 60px">总额度</th>
-          <th style="width: 60px">已使用</th>
-          <th style="width: 90px">剩余额度</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-</div>
-    <script>
-      // 定义查询过的API-KEY列表
-      let queriedApiKeys = [];
+			padding: 20px;
+			max-width: 1200px;
+			margin: auto;
+			//background: #FFF;
+			border-radius: 15px;
+			font-size: 16px;
+			font-family: Consolas, "Courier New", Courier, FreeMono, monospace;
+		}
 
-      async function checkBilling(apiKey) {
-        // 计算起始日期和结束日期
-        const now = new Date();
-        const startDate = new Date(now - 90 * 24 * 60 * 60 * 1000);
-        const endDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-
-        // 设置API请求URL和请求头
-        const urlSubscription = 'https://api.openai.com/v1/dashboard/billing/subscription'; // 查是否订阅
-        const urlBalance = 'https://api.openai.com/dashboard/billing/credit_grants'; // 查普通账单
-        const urlUsage = `https://api.openai.com/v1/dashboard/billing/usage?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}`; // 查使用量
-        const headers = {
-          "Authorization": "Bearer " + apiKey,
-          "Content-Type": "application/json"
-        };
-
-        try {
-          // 获取API限额
-          let response = await fetch(urlSubscription, {headers});
-          if (!response.ok) {
-            console.log("您的账户已被封禁，请登录OpenAI进行查看。");
-            return;
-          }
-          const subscriptionData = await response.json();
-          const totalAmount = subscriptionData.hard_limit_usd;
-
-          // 获取已使用量
-          response = await fetch(urlUsage, {headers});
-          const usageData = await response.json();
-          const totalUsage = usageData.total_usage / 100;
-
-          // 计算剩余额度
-          const remaining = totalAmount - totalUsage;
-
-          // 输出总用量、总额及余额信息
-          console.log(`Total Amount: ${totalAmount.toFixed(2)}`);
-          console.log(`Used: ${totalUsage.toFixed(2)}`);
-          console.log(`Remaining: ${remaining.toFixed(2)}`);
-
-          return [totalAmount, totalUsage, remaining];
-        } catch (error) {
-          console.error(error);
-          return [null, null, null];
-        }
-      }
-
-      function formatDate(date) {
-        const year = date.getFullYear();
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
-
-        return `${year}-${month}-${day}`;
-      }
-
-      function sendRequest() {
-        let apiKeyInput = document.getElementById("api-key-input");
-        let apiUrlSelect = document.getElementById("api-url-select");
-        let customUrlInput = document.getElementById("custom-url-input");
-
-        if (apiKeyInput.value.trim() === "") {
-          alert("请填写API KEY");
-          return;
-        }
-
-        // 添加以下一行代码，清空之前的结果信息
-        document.getElementById("result-table").getElementsByTagName('tbody')[0].innerHTML = "";
-
-        let apiUrl = "";
-        if (apiUrlSelect.value === "custom") {
-          if (customUrlInput.value.trim() === "") {
-            alert("请设置API链接");
-            return;
-          } else {
-            apiUrl = customUrlInput.value.trim();
-          }
-        } else {
-          apiUrl = apiUrlSelect.value;
-        }
-
-        let apiKeys = apiKeyInput.value.trim().split("\n");
-
-        let tableBody = document.querySelector("#result-table tbody");
-        for (let i = 0; i < apiKeys.length; i++) {
-          let apiKey = apiKeys[i].trim();
-          // 判断是否已经查询过
-          if (queriedApiKeys.includes(apiKey)) {
-            console.log(`API KEY ${apiKey} 已查询过，跳过此次查询`);
-            continue;
-          }
-          queriedApiKeys.push(apiKey);
-
-          checkBilling(apiKey).then((data) => {
-            // update table with data
-            let row = document.createElement("tr");
-
-            // API KEY
-            let apiKeyCell = document.createElement("td");
-            apiKeyCell.textContent = apiKey;
-            row.appendChild(apiKeyCell);
-
-            if (data[0] === null) {
-              // ERROR MESSAGE
-              let errorMessageCell = document.createElement("td");
-              errorMessageCell.colSpan = "3";
-              errorMessageCell.classList.add("status-error");
-              errorMessageCell.textContent = "不正确或已失效的API-KEY";
-              row.appendChild(errorMessageCell);
-            } else {
-              // TOTAL GRANTED
-              let totalGrantedCell = document.createElement("td");
-              totalGrantedCell.textContent = data[0].toFixed(2);
-              row.appendChild(totalGrantedCell);
-
-              // TOTAL USED
-              let totalUsedCell = document.createElement("td");
-              totalUsedCell.textContent = data[1].toFixed(2);
-              row.appendChild(totalUsedCell);
-
-              // TOTAL AVAILABLE
-              let totalAvailableCell = document.createElement("td");
-              totalAvailableCell.textContent = data[2].toFixed(2);
-              row.appendChild(totalAvailableCell);
-            }
-
-            tableBody.appendChild(row);
-
-            // 添加以下代码，查询完成后删除已查询的API-KEY
-            if (i === apiKeys.length - 1) {
-              queriedApiKeys = [];
-            }
-          }).catch((error) => {
-            console.error(error);
-            // update table with error message
-            let row = document.createElement("tr");
-            let apiKeyCell = document.createElement("td");
-            apiKeyCell.textContent = apiKey;
-            row.appendChild(apiKeyCell);
-
-            let errorMessageCell = document.createElement("td");
-            errorMessageCell.colSpan = "3";
-            errorMessageCell.style.width = "90px";
-            errorMessageCell.classList.add("status-error");
-            errorMessageCell.textContent =
-              "账户已被封禁，请登录OpenAI进行查看。";
-            row.appendChild(errorMessageCell);
-
-            tableBody.appendChild(row);
-
-            // 添加以下代码，查询完成后删除已查询的API-KEY
-            if (i === apiKeys.length - 1) {
-              queriedApiKeys = [];
-            }
-          });
-        }
-      }
-
-      let apiUrlSelect = document.getElementById("api-url-select");
-      let customUrlInput = document.getElementById("custom-url-input");
-
-      apiUrlSelect.addEventListener("change", function () {
-        if (apiUrlSelect.value === "custom") {
-          customUrlInput.style.display = "inline-block";
-          customUrlInput.style.marginTop = "5px";
-        } else {
-          customUrlInput.style.display = "none";
-        }
-      });
-    </script>
-
-
-
-
-
-
-
-
-
-
-
-<div class="mx-auto max-w-7xl px-0">
-    <div class="container justify-center items-center">
-        <div class="content">
-           <h1 class="text-3xl font-semibold text-center mb-8 text-gradient">OpenAI 余额查询(单Key)</h1>
-            <form method="POST" onsubmit="event.preventDefault(); checkOpenAICredit();" class="flex items-center mb-10">
-                <label for="api_key" class="w-28 mr-4 text-gradient">API密钥:</label>
-                <input type="text" placeholder="请输入您的API密钥:" name="api_key" id="api_key"
-                    class="border border-gray-400 rounded px-2 py-1 w-full max-w-md focus:outline-none focus:border-blue-500" required>
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full ml-4">
-                <span style="display:inline-block; width: 50px;">查询</span>
-                </button>
-                <div id="loader" class="loader ml-4" style="display:none;"></div>
-            </form>
-            <div id="result"></div>
-        </div>
-    </div>
-    </div>
-    <script>
-
-function showLoader() {
-    document.getElementById("loader").style.display = "inline-block";
+h1 {
+    text-align: center;
+    font-size: 60px;
+    margin-bottom: 50px;
+}
+.text-gradient {
+    background-image: linear-gradient(to right, #4299e5, #00c458);
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
-function hideLoader() {
-    document.getElementById("loader").style.display = "none";
+.text-gradient {
+  animation: gradient-animation 2s linear infinite;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+@keyframes gradient-animation {
+  from {background-image: linear-gradient(to right, #4299e5, #00c458);}
+  to {background-image: linear-gradient(to right, #00c458, #4299e5);}
 }
 
-function displayResult(data) {
-    if (data.status === "success") {
-        document.getElementById("result").innerHTML = `
-            <div class="grid grid-cols-3 gap-4">
-                <div class="grid-item bg-gray-100 p-6 rounded-lg text-center">
-                    <p class="text-2xl font-semibold">${data.total_granted}</p>
-                    <p class="text-gray-600">总额度</p>
-                </div>
-                <div class="grid-item bg-gray-100 p-6 rounded-lg text-center">
-                    <p class="text-2xl font-semibold">${parseFloat(data.total_used).toFixed(3)}</p>
-                    <p class="text-gray-600">已使用额度</p>
-                </div>
-                <div class="grid-item bg-gray-100 p-6 rounded-lg text-center">
-                    <p class="text-2xl font-semibold">${parseFloat(data.total_available).toFixed(3)}</p>
-                    <p class="text-gray-600">剩余可用额度</p>
-                </div>
-            </div>
-        `;
-    } else {
-        alert("您的账户已被封禁，请登录OpenAI进行查看。");
-    }
-}
 
-function checkOpenAICredit() {
-    var apiKey = document.getElementById("api_key").value;
+		#langSwitch {
+			float: right;
+		}
 
-    if (!apiKey.startsWith("sk-")) {
-        alert("无效的API密钥，请检查您的API密钥是否正确。");
-        return;
+		textarea {
+			resize: none;
+			overflow-y: auto;
+			line-height: 22px;
+			min-height: 40px;
+			max-height: 300px;
+			padding: 6px 12px;
+			box-sizing: border-box;
+			border: 2px solid gray;
+			border-radius: 4px;
+			font-size: 16px;
+		}
+
+		.tool {
+			display: flex;
+			align-items: flex-end;
+			justify-content: space-between;
+			margin-bottom: 10px;
+			user-select: none;
+		}
+
+		.custom-switch {
+			display: flex;
+			align-items: center;
+		}
+
+		.tool input {
+			margin: 0 8px 0 0;
+		}
+
+		.tool label,
+		.tool input,
+		.custom-switch {
+			cursor: pointer;
+		}
+
+		.btn {
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+			margin-top: 10px;
+			height: 40px;
+			min-width: 100px;
+			padding: 0 20px;
+			box-sizing: border-box;
+		}
+
+		.btn:hover {
+			opacity: .8;
+		}
+
+		.btn-primary {
+			background-color: #007bff;
+			color: white;
+		}
+
+		.btn-plain {
+			background-color: #FFF;
+			border: 1px solid transparent;
+			border-color: #dcdee2;
+			border-radius: 3px;
+			line-height: 1.5;
+			transition: color .2s linear, background-color .2s linear, border .2s linear, box-shadow .2s linear, -webkit-box-shadow .2s linear;
+			outline: 0;
+			color: #515a6e;
+			font-size: 14px;
+			font-weight: 400;
+			cursor: pointer;
+		}
+
+		.btn-plain:hover {
+			color: #57a3f3;
+			background-color: #fff;
+			border-color: #57a3f3;
+		}
+
+		.btn-secondary {
+			background-color: #6c757d;
+			color: white;
+		}
+
+		.btn-success {
+			background-color: #28a745;
+			color: white;
+		}
+
+		.table {
+        width: 100%;
+        border-collapse: collapse;
     }
 
-    showLoader();
-    checkBilling(apiKey)
-    .then(data => {
-        displayResult({
-        status: "success",
-        total_granted: data[0],
-        total_used: data[1],
-        total_available: data[2]
-        });
-        hideLoader();
-    })
-    .catch(error => {
-        alert("您的账户已被封禁，请登录OpenAI进行查看。");
-        hideLoader();
-    });
+.table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-async function checkBilling(apiKey) {
-  // 计算起始日期和结束日期
-  const now = new Date();
-  const startDate = new Date(now - 90 * 24 * 60 * 60 * 1000);
-  const endDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-
-  // 设置API请求URL和请求头
-  const urlSubscription = 'https://api.unchatgp.com/v1/dashboard/billing/subscription'; // 查是否订阅
-  const urlBalance = 'https://api.unchatgp.com/dashboard/billing/credit_grants'; // 查普通账单
-  const urlUsage = `https://api.unchatgp.com/v1/dashboard/billing/usage?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}`; // 查使用量
-  const headers = {
-    "Authorization": "Bearer " + apiKey,
-    "Content-Type": "application/json"
-  };
-
-  try {
-    // 获取API限额
-    let response = await fetch(urlSubscription, {headers});
-    if (!response.ok) {
-      console.log("您的账户已被封禁，请登录OpenAI进行查看。");
-      return;
-    }
-    const subscriptionData = await response.json();
-    const totalAmount = subscriptionData.hard_limit_usd;
-
-    // 获取已使用量
-    response = await fetch(urlUsage, {headers});
-    const usageData = await response.json();
-    const totalUsage = usageData.total_usage / 100;
-
-    // 计算剩余额度
-    const remaining = totalAmount - totalUsage;
-
-    // 输出总用量、总额及余额信息
-    console.log(`Total Amount: ${totalAmount.toFixed(2)}`);
-    console.log(`Used: ${totalUsage.toFixed(2)}`);
-    console.log(`Remaining: ${remaining.toFixed(2)}`);
-
-    return [totalAmount, totalUsage, remaining];
-  } catch (error) {
-    console.error(error);
-    return [null, null, null];
-  }
+.table-responsive {
+  overflow: auto;
 }
-function formatDate(date) {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  return `${year}-${month}-${day}`;
+
+.table th,
+.table td {
+  padding: 15px;
+  border: 1px solid black;
+  text-align: center;
 }
-    </script>
-  </body>
+
+.table th {
+  background-color: #b80056;
+  color: white;
+  font-weight: bold; /* 加粗表头字体 */
+}
+
+/* 奇数行淡紫色背景 */
+.table-striped tbody tr:nth-of-type(odd) { 
+    background-color: #00b894; 
+}
+
+/* 偶数行淡粉色背景 */
+.table-striped tbody tr:nth-of-type(even) { 
+    background-color: #a45ae4de; 
+}
+
+
+label[for="proxySwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+
+
+#resultTitle{
+font-family:"微软雅黑",
+sans-serif;color:white;
+}
+
+#process{
+font-family:"微软雅黑",
+sans-serif;color:white;
+}
+
+
+
+
+		#langSwitch {
+			cursor: pointer;
+		}
+
+		#langSwitch:hover {
+			opacity: .6;
+		}
+
+		#purchase {
+			display: inline-block;
+			line-height: 40px;
+			text-decoration: none;
+		}
+
+		#result-tool {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 40px;
+			margin-top: 40px;
+		}
+
+		#result-tool_rt {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+		}
+
+		#capture {
+			margin-left: 6px;
+		}
+
+		#resultTitle {
+			font-weight: bold;
+		}
+
+		#submit {
+			margin-right: 8px;
+		}
+	</style>
+</head>
+
+<body>
+	
+<div class="contents">
+		<h1 id="title" class="text-3xl font-semibold text-center mb-8 text-gradient"
+			style="font-size: 45px;text-align: center;">OpenAI API Key Check</h1>
+
+		<div class="tool">
+			<div class="custom-control custom-switch">
+				<input type="checkbox"
+					   id="proxySwitch"
+					   checked>
+				<label for="proxySwitch">Use Proxy</label>
+			</div>
+			<svg t="1684909313939"
+				 id="langSwitch"
+				 class="icon"
+				 viewBox="0 0 1024 1024"
+				 version="1.1"
+				 xmlns="http://www.w3.org/2000/svg"
+				 p-id="2392"
+				 width="24"
+				 height="24">
+				<path d="M446.857143 616q-0.571429 1.714286-7.142857 2.857143t-18-6.571429l-11.428571-5.142857q-25.142857-11.428571-49.714286-28-4-2.857143-23.428571-18t-21.714286-16.285714q-38.285714 58.857143-76.571429 103.428571-46.285714 54.285714-60 62.857143-2.285714 1.142857-11.142857 2.285714t-10.571429 0q3.428571-2.285714 46.857143-52.571429 12-13.714286 48.857143-65.714286t44.857143-67.428571q9.714286-17.142857 29.142857-56.285714t20.571429-44.285714q-4.571429-0.571429-62.857143 18.857143-4.571429 1.142857-15.714286 4.285714t-19.714286 5.428571-9.714286 2.857143q-1.142857 1.142857-1.142857 6t-0.571429 5.428571q-2.857143 5.714286-17.714286 8.571429-13.142857 4-26.857143 0-10.285714-2.285714-16-12-2.285714-3.428571-2.857143-13.142857 3.428571-1.142857 14-2.857143t16.857143-3.428571q33.142857-9.142857 60-18.285714 57.142857-20 58.285714-20 5.714286-1.142857 24.571429-11.142857t25.142857-12.285714q5.142857-1.714286 12.285714-4.571429t8.285714-3.142857 3.428571 2.857143q1.142857 6.857143-0.571429 18.857143 0 1.142857-7.142857 15.428571t-15.142857 30.571429-9.714286 19.142857q-14.285714 28.571429-44 74.857143l36.571429 16q6.857143 3.428571 42.571429 18.285714t38.571429 16q2.285714 0.571429 6 14.571429t2.571429 17.428571zm-117.142857-277.714286q1.714286 8.571429-2.285714 16-6.857143 13.142857-28.571429 21.714286-17.142857 6.857143-34.285714 6.857143-14.857143-1.714286-28-14.857143-8-8.571429-10.285714-23.428571l0.571429-1.714286q1.714286 1.714286 11.142857 2.857143t15.142857 0 33.142857-9.142857q20.571429-6.857143 31.428571-8 9.714286 0 12 9.714286zm398.857143 73.714286l36 129.714286-79.428571-24zm-633.142857 457.142857l396.571429-132.571429 0-589.714286-396.571429 133.142857 0 589.142857zm709.142857-181.142857l58.285714 17.714286-103.428571-375.428571-57.142857-17.714286-123.428571 306.285714 58.285714 17.714286 25.714286-62.857143 120.571429 37.142857zm-287.428571-549.714286l327.428571 105.142857 0-217.142857zm177.714286 756l90.285714 7.428571-30.857143 91.428571-22.857143-37.714286q-74.285714 47.428571-157.714286 61.714286-33.142857 6.857143-52 6.857143l-48 0q-45.142857 0-114-22.285714t-104.857143-48.571429q-4.571429-4-4.571429-9.142857 0-4.571429 2.857143-7.714286t7.428571-3.142857q2.285714 0 10.285714 4.285714t17.428571 9.428571 11.714286 6.285714q41.714286 21.142857 91.142857 35.142857t90 14q54.285714 0 95.428571-8.285714t89.714286-28.857143q8.571429-4 17.428571-8.857143t19.428571-10.857143 16.285714-9.428571zm256-616.571429l0 616.571429-442.285714-140.571429q-8 3.428571-214.285714 72.857143t-210.285714 69.428571q-7.428571 0-10.285714-7.428571 0-0.571429-0.571429-1.714286l0-616q1.714286-5.142857 2.285714-5.714286 2.857143-3.428571 11.428571-6.285714 60.571429-20 85.142857-28.571429l0-219.428571 318.857143 113.142857q1.142857 0 91.714286-31.428571t180.571429-62 92.285714-30.571429q11.428571 0 11.428571 12l0 238.857143z"
+					  p-id="2393"></path>
+			</svg>
+		</div>
+		<textarea id="keys" class="form-control"
+				  style="width: 100%;"
+				  rows="1"
+				  autocomplete="on"
+				  autofocus
+				  placeholder="Enter API keys, one per line"></textarea>
+		<br />
+		<button id="submit"
+				class="btn btn-primary">Check</button>
+		<div id="result-tool">
+			<div class="result-tool_lt">
+				<span id="resultTitle">Results: </span>
+				<span id="process">0/0</span>
+			</div>
+			<div id="result-tool_rt">
+				<button id="download"
+						class="btn-plain">Download</button>
+				<button id="capture"
+						class="btn-plain">Save Capture</button>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table id="result"
+				   class="table table-striped">
+				<thead>
+					<tr>
+						<th id="keyHeader">#</th>
+						<th>Key</th>
+						<th id="typeHeader">type</th>
+						<th id="usageHeader">Usage</th>
+						<th id="balanceHeader">Credit</th>
+						<th id="expiresHeader">Expires</th>
+					</tr>
+				</thead>
+				<tbody id="resultBody">
+				</tbody>
+			</table>
+		</div>
+	</div></div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+	<script>
+		// Constants
+		const CONCURRENT_LIMIT = 3;
+		const $ = (arg) => document.querySelector(arg)
+
+		// Variables
+		let isEn = true;
+		let keyCounter = 0;
+		let validKeys = [];
+		let invalidKeys = [];
+		let keyQueue = [];
+		let activeRequests = 0;
+		let total = 0;
+		let count = 0;
+		let checking = false;
+
+		window.onload = function () {
+			updateLanguageTexts();
+			$("#keys").addEventListener('input', function () {
+				this.style.height = 'auto';
+				this.style.height = (this.scrollHeight) + 'px';
+			});
+			$("#keys").addEventListener('keydown', function (event) {
+				if (event.key === 'Enter') {
+					event.preventDefault(); // Prevents the addition of a new line in the text field (not needed in a lot of cases)
+					startKeyCheck();
+				}
+			});
+			$("#submit").addEventListener('click', startKeyCheck);
+			$("#langSwitch").addEventListener('click', switchLanguage);
+			$("#download").addEventListener('click', downloadKeys);
+			$("#capture").addEventListener('click', saveImage);
+		};
+
+		function formatDate(date, format) {
+			const options = {
+				"Y+": date.getFullYear().toString(),
+				"m+": (date.getMonth() + 1).toString(),
+				"d+": date.getDate().toString(),
+				"H+": date.getHours().toString(),
+				"M+": date.getMinutes().toString(),
+				"S+": date.getSeconds().toString()
+			};
+			for (let option in options) {
+				const match = new RegExp("(" + option + ")").exec(format);
+				if (match) {
+					format = format.replace(match[1], (match[1].length == 1) ? (options[option]) : (options[option].padStart(match[1].length, "0")))
+				};
+			};
+			return format;
+		}
+
+		async function startKeyCheck() {
+			let keys = $("#keys").value.split('\n').filter(i => i.trim() !== '' && i.indexOf('sk-') !== -1).map(i => {
+				const matches = i.match(/sk-[a-zA-Z0-9]{48}/);
+				if (matches) {
+					return matches[0]
+				}
+				return i
+			});
+			total = keys.length;
+			count = 0;
+			keyCounter = 0;
+			validKeys = [];
+			invalidKeys = [];
+			$("#resultBody").innerHTML = '';
+			if (!keys[0]) {
+				$("#resultBody").innerHTML = `<tr><td colspan="5" class="text-center">${isEn ? 'No results' : '暂无查询结果'}</td></tr>`;
+				alert(isEn ? 'Invalid Key' : '无效 Key')
+				return;
+			}
+			$('#submit').innerHTML = isEn ? 'Checking' : '检查中'
+			keyQueue = [...keys];
+			let limit = keys.length > CONCURRENT_LIMIT ? CONCURRENT_LIMIT : keys.length;
+			for (let i = 0;i < limit;i++) {
+				await processNextKey();
+			}
+			$('#submit').innerHTML = isEn ? 'Check' : '查询'
+		}
+
+		async function processNextKey() {
+			if (keyQueue.length) {
+				activeRequests++;
+				let key = keyQueue.shift();
+				let result = await fetchUsageAndBalance(key);
+				count++;
+				$('#process').innerHTML = `${count}/${total}`
+				addResultToTable(result);
+				await processNextKey();
+			}
+		}
+
+		async function fetchUsageAndBalance(key) {
+			const apiEndPoint = $('#proxySwitch').checked ? "https://api.unchatgp.com" : "https://api.openai.com";
+			const API_USAGE_ENDPOINT = `${apiEndPoint}/dashboard/billing/usage`;
+			const API_BALANCE_ENDPOINT = `${apiEndPoint}/dashboard/billing/subscription`;
+			const API_RATE_LMITES = `${apiEndPoint}/dashboard/rate_limits`;
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + key
+				}
+			}
+
+			try {
+				const balanceResponse = await fetch(API_BALANCE_ENDPOINT, config);
+				const balance = await balanceResponse.json();
+
+				const typesResponse = await fetch(API_RATE_LMITES, config);
+				const types = await typesResponse.json();
+
+				if (balance.error) {
+					console.warn(balance.error.message);
+					return { key }
+				}
+
+				const ONE_DAY = 1 * 24 * 60 * 60 * 1000;
+				const now = new Date();
+				const startOfMonth = balance.plan.id === 'free' ? new Date(Date.now() - 90 * ONE_DAY) : new Date(now.getFullYear(), now.getMonth(), 1);
+				const startDate = formatDate(startOfMonth, 'YYYY-mm-dd');
+				const endDate = formatDate(new Date(Date.now() + ONE_DAY), 'YYYY-mm-dd');
+
+				const usageResponse = await fetch(`${API_USAGE_ENDPOINT}?start_date=${startDate}&end_date=${endDate}`, config);
+				const usage = await usageResponse.json();
+				const isGPT4 = types['gpt-4'] || types['gpt-4-0613'] || types['gpt-4-32k'] || types['gpt-4-32k-0613']
+
+				if (isGPT4) console.log('GPT-4:', key)
+
+				activeRequests--;
+				return {
+					key,
+					usage: (usage.total_usage / 100).toFixed(2),
+					balance: Math.round(balance.hard_limit_usd),
+					type: isGPT4 ? 'GPT-4' : 'GPT-3.5',
+					expires: formatDate(new Date(balance.access_until * 1000), 'YYYY/mm/dd')
+				};
+			} catch (error) {
+				console.warn(`Failed to fetch data for key ${key}`, error);
+				activeRequests--;
+				return { key };
+			}
+
+		}
+
+		function addResultToTable(result) {
+			if (!result.balance) {
+				keyCounter++;
+				let row = `<tr style="background-color:#efbbbb;"><td>${keyCounter}</td><td>${result.key}</td><td colspan="4">${isEn ? 'Invalid Key' : '无效 Key'}</td></tr>`;
+				$("#resultBody").innerHTML += row;
+			} else {
+				if (result.balance > 0) {
+					validKeys.push(result);
+					keyCounter++;
+					let row = `<tr><td>${keyCounter}</td><td>${result.key}</td><td>${result.type}</td><td>${'$' + result.usage}</td><td>${'$' + result.balance}</td><td>${result.expires}</td></tr>`;
+					$("#resultBody").innerHTML += row;
+				} else {
+					invalidKeys.push(result);
+				}
+			}
+
+			let isEnd = keyQueue.length === 0 && activeRequests === 0;
+
+			if (isEnd) {
+				invalidKeys.forEach((invalidKey, index) => {
+					keyCounter++;
+					let row = `<tr><td>${keyCounter}</td><td>${invalidKey.key}</td><td>${invalidKey.type}</td><td>${'$' + invalidKey.usage}</td><td>${'$' + invalidKey.balance}</td><td>${invalidKey.expires}</td></tr>`;
+					$("#resultBody").innerHTML += row;
+				});
+			}
+		}
+
+		function switchLanguage() {
+			isEn = !isEn;
+			updateLanguageTexts();
+		}
+
+		function downloadKeys() {
+			let validKeysText = validKeys.map(result => result.key).join('\n');
+			let invalidKeysText = invalidKeys.map(result => result.key).join('\n');
+			if (validKeysText.trim() === '' && invalidKeysText.trim() === '') {
+				alert(isEn ? 'There is no downloadable content' : '没有可下载内容')
+				return
+			}
+			downloadFile('valid_keys.txt', validKeysText);
+			downloadFile('invalid_keys.txt', invalidKeysText);
+		}
+
+		function downloadFile(filename, text) {
+			let formattedText = text.split('\n').map(key => key.trim()).join('\n');
+			let element = document.createElement('a');
+			element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(formattedText));
+			element.setAttribute('download', filename);
+			element.style.display = 'none';
+			document.body.appendChild(element);
+			element.click();
+			document.body.removeChild(element);
+		}
+
+		function updateLanguageTexts() {
+			$("#title").textContent = isEn ? 'OpenAI API Key Check' : 'OpenAI API余额查询(批量)';
+			$("#keys").setAttribute('placeholder', isEn ? 'Enter API keys, one per line' : '在这里输入API密钥，每行一个');
+			$("#submit").textContent = isEn ? 'Check' : '查    询';
+			$("#resultTitle").textContent = isEn ? 'Results:' : '查询结果：';
+			$("#keyHeader").textContent = isEn ? 'No.' : '序号';
+			$("#typeHeader").textContent = isEn ? 'Type' : '类型';
+			$("#usageHeader").textContent = isEn ? 'Usage' : '使用量';
+			$("#balanceHeader").textContent = isEn ? 'Credit' : '总额度';
+			$("#expiresHeader").textContent = isEn ? 'Expires' : '有效期';
+			$("#proxySwitch").nextElementSibling.textContent = isEn ? 'Use Proxy' : '使用代理';
+			$("#download").textContent = isEn ? 'Download' : '下载';
+			$("#capture").textContent = isEn ? 'Save Capture' : '保存截图';
+		}
+
+		function saveImage() {
+			if (total <= 0) {
+				alert(isEn ? 'No content to display in screenshot' : '无查询内容可截图')
+				return
+			}
+			document.documentElement.scrollTop = 0;
+			document.body.scrollTop = 0;
+			html2canvas($('#result')).then(
+				(canvas) => {
+					let img = document.createElement('a');
+					img.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+					img.download = `openai_key_${total}_${formatDate(new Date(), 'YYYYmmdd')}.jpg`;
+					img.click();
+				}
+			)
+		}
+
+	</script>
+</body>
+
 </html>
