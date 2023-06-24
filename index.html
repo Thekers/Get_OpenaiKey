@@ -562,7 +562,7 @@ sans-serif;color:white;
 
 		function updateLanguageTexts() {
 			$("#title").textContent = isEn ? 'OpenAI API Key Check' : 'OpenAI API余额查询(批量)';
-			$("#keys").setAttribute('placeholder', isEn ? 'Enter API keys, one per line' : '在这里输入API密钥，每行一个');
+			$("#keys").setAttribute('placeholder', isEn ? 'Enter API keys, one per line' : '在这里输入API密钥，每行一个，同时支持格式: 账号;密码;Key ');
 			$("#submit").textContent = isEn ? 'Check' : '查    询';
 			$("#resultTitle").textContent = isEn ? 'Results:' : '查询结果：';
 			$("#keyHeader").textContent = isEn ? 'No.' : '序号';
