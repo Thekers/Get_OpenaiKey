@@ -2,10 +2,10 @@
 <html>
 
 <head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<title>OpenAI API Key Check</title>
 	<meta charset="UTF-8">
-	<meta name="viewport"
-		  content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 
 .contents {
@@ -17,6 +17,11 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: rgba(0, 0, 0, 0.63);
 }
+
+.custom-style {
+      font-family: "微软雅黑";
+      color: white;
+    }
 
 .btn-plain{ 
 background-color: transparent;
@@ -219,7 +224,7 @@ h1 {
 }
 
 .table th {
-  background-color: #b80056;
+  background-color: #710f94;
   color: white;
   font-weight: bold; /* 加粗表头字体 */
 }
@@ -236,6 +241,23 @@ h1 {
 
 
 label[for="proxySwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+
+label[for="typeCheckSwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+label[for="totalCheckSwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+label[for="monthlyCheckSwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+label[for="typeCheckSwitch"] {
   font-family: "微软雅黑", sans-serif;
   color: white;
 }
@@ -294,14 +316,25 @@ sans-serif;color:white;
 			margin-right: 8px;
 		}
 	</style>
-</head>
+<script>/*
+ *   You can replace the following code with whatever you would like
+ *   to inject into other web pages.
+ */
+
+
+/*  An example script
+ *
+ *  @param {els} count dom elements
+ */
+
+window.calc = function(els) {
+   return document.querySelectorAll(els).length;
+};
+</script></head>
 
 <body>
-	
-<div class="contents">
-		<h1 id="title" class="text-3xl font-semibold text-center mb-8 text-gradient"
-			style="font-size: 45px;text-align: center;">OpenAI API Key Check</h1>
-
+	<div class="contents">
+		<h1 id="title" class="text-3xl font-semibold text-center mb-8 text-gradient" style="font-size: 45px;text-align: center;">OpenAI API Key Check</h1>
 		<div class="tool">
 			<div class="custom-control custom-switch">
 				<input type="checkbox"
@@ -322,7 +355,7 @@ sans-serif;color:white;
 					  p-id="2393"></path>
 			</svg>
 		</div>
-		<textarea id="keys" class="form-control"
+		<textarea id="keys"
 				  style="width: 100%;"
 				  rows="1"
 				  autocomplete="on"
@@ -337,6 +370,30 @@ sans-serif;color:white;
 				<span id="process">0/0</span>
 			</div>
 			<div id="result-tool_rt">
+				<div class="check-box">
+					<input type="checkbox"
+						   id="typeCheckSwitch"  class="custom-style"
+						   checked>
+					<label for="typeCheckSwitch">
+						CheckType
+					</label>
+				</div>
+				<div class="check-box">
+					<input type="checkbox"
+						   id="totalCheckSwitch"
+						   checked>
+					<label for="totalCheckSwitch">
+						CheckTotalUsage
+					</label>
+				</div>
+				<div class="check-box">
+					<input type="checkbox"
+						   id="monthlyCheckSwitch"
+						   checked>
+					<label for="monthlyCheckSwitch">
+						CheckMonthlyUsage
+					</label>
+				</div>
 				<button id="download"
 						class="btn-plain">Download</button>
 				<button id="capture"
@@ -350,9 +407,11 @@ sans-serif;color:white;
 					<tr>
 						<th id="keyHeader">#</th>
 						<th>Key</th>
-						<th id="typeHeader">type</th>
-						<th id="usageHeader">Usage</th>
+						<th id="typeHeader">Type</th>
+						<th id="totalHeader">Total Usage</th>
+						<th id="usageHeader">Monthly Usage</th>
 						<th id="balanceHeader">Credit</th>
+						<th id="delinquentHeader">Delinquent</th>
 						<th id="expiresHeader">Expires</th>
 					</tr>
 				</thead>
@@ -360,7 +419,7 @@ sans-serif;color:white;
 				</tbody>
 			</table>
 		</div>
-	</div></div>
+	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 	<script>
 		// Constants
@@ -377,6 +436,11 @@ sans-serif;color:white;
 		let total = 0;
 		let count = 0;
 		let checking = false;
+		let controllers = [];
+		let cancel = false
+		let typeCheck = true
+		let totalCheck = true
+		let monthlyCheck = true
 
 		window.onload = function () {
 			updateLanguageTexts();
@@ -385,6 +449,23 @@ sans-serif;color:white;
 				this.style.height = (this.scrollHeight) + 'px';
 			});
 			$("#keys").addEventListener('keydown', function (event) {
+				const isShiftPressed = event.shiftKey;
+				const isEnterPressed = event.key === "Enter";
+
+				if (isShiftPressed && isEnterPressed) {
+					const text = this.value;
+					const cursorPosition = this.selectionStart;
+
+					const newText = text.substring(0, cursorPosition) + "\n" + text.substring(cursorPosition);
+					this.value = newText;
+
+					event.preventDefault();
+
+					this.style.height = 'auto';
+					this.style.height = (this.scrollHeight) + 'px';
+					return
+				}
+
 				if (event.key === 'Enter') {
 					event.preventDefault(); // Prevents the addition of a new line in the text field (not needed in a lot of cases)
 					startKeyCheck();
@@ -394,7 +475,22 @@ sans-serif;color:white;
 			$("#langSwitch").addEventListener('click', switchLanguage);
 			$("#download").addEventListener('click', downloadKeys);
 			$("#capture").addEventListener('click', saveImage);
+			$('#typeCheckSwitch').addEventListener('change', onTypeCheckChange)
+			$('#totalCheckSwitch').addEventListener('change', onTotalCheckChange)
+			$('#monthlyCheckSwitch').addEventListener('change', onMonthCheckChange)
 		};
+
+		function onTypeCheckChange(event) {
+			typeCheck = event.target.checked
+		}
+
+		function onTotalCheckChange(event) {
+			totalCheck = event.target.checked
+		}
+
+		function onMonthCheckChange(event) {
+			monthlyCheck = event.target.checked
+		}
 
 		function formatDate(date, format) {
 			const options = {
@@ -415,6 +511,12 @@ sans-serif;color:white;
 		}
 
 		async function startKeyCheck() {
+			if (checking) {
+				cancel = true
+				controllers.forEach(controller => controller.abort());
+				return
+			}
+
 			let keys = $("#keys").value.split('\n').filter(i => i.trim() !== '' && i.indexOf('sk-') !== -1).map(i => {
 				const matches = i.match(/sk-[a-zA-Z0-9]{48}/);
 				if (matches) {
@@ -429,20 +531,24 @@ sans-serif;color:white;
 			invalidKeys = [];
 			$("#resultBody").innerHTML = '';
 			if (!keys[0]) {
-				$("#resultBody").innerHTML = `<tr><td colspan="5" class="text-center">${isEn ? 'No results' : '暂无查询结果'}</td></tr>`;
+				$("#resultBody").innerHTML = `<tr><td colspan="8" class="text-center">${isEn ? 'No results' : '暂无查询结果'}</td></tr>`;
 				alert(isEn ? 'Invalid Key' : '无效 Key')
 				return;
 			}
-			$('#submit').innerHTML = isEn ? 'Checking' : '检查中'
+			checking = true
+			$('#submit').innerHTML = isEn ? 'Cancel' : '取消'
 			keyQueue = [...keys];
 			let limit = keys.length > CONCURRENT_LIMIT ? CONCURRENT_LIMIT : keys.length;
 			for (let i = 0;i < limit;i++) {
 				await processNextKey();
 			}
-			$('#submit').innerHTML = isEn ? 'Check' : '查询'
+			checking = false
+			cancel = false
+			$('#submit').innerHTML = isEn ? 'Check' : '检查'
 		}
 
 		async function processNextKey() {
+			if (cancel) return
 			if (keyQueue.length) {
 				activeRequests++;
 				let key = keyQueue.shift();
@@ -465,43 +571,73 @@ sans-serif;color:white;
 					'Authorization': 'Bearer ' + key
 				}
 			}
+			const _key = key.replace(/^(.{7}).*(.{4})$/, "$1********$2")
 
 			try {
-				const balanceResponse = await fetch(API_BALANCE_ENDPOINT, config);
+				const balanceController = controller = new AbortController();
+				controllers.push(balanceController);
+				const balanceResponse = await fetch(API_BALANCE_ENDPOINT, { signal: balanceController.signal, ...config }).catch(err => console.log(err));
 				const balance = await balanceResponse.json();
 
-				const typesResponse = await fetch(API_RATE_LMITES, config);
-				const types = await typesResponse.json();
 
 				if (balance.error) {
 					console.warn(balance.error.message);
-					return { key }
+					return { key: _key }
 				}
 
 				const ONE_DAY = 1 * 24 * 60 * 60 * 1000;
 				const now = new Date();
-				const startOfMonth = balance.plan.id === 'free' ? new Date(Date.now() - 90 * ONE_DAY) : new Date(now.getFullYear(), now.getMonth(), 1);
-				const startDate = formatDate(startOfMonth, 'YYYY-mm-dd');
+				const startOfYear = new Date(Date.now() - 90 * ONE_DAY);
+				const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+				const startDateOfYear = formatDate(startOfYear, 'YYYY-mm-dd');
 				const endDate = formatDate(new Date(Date.now() + ONE_DAY), 'YYYY-mm-dd');
 
-				const usageResponse = await fetch(`${API_USAGE_ENDPOINT}?start_date=${startDate}&end_date=${endDate}`, config);
-				const usage = await usageResponse.json();
-				const isGPT4 = types['gpt-4'] || types['gpt-4-0613'] || types['gpt-4-32k'] || types['gpt-4-32k-0613']
+				let monthlyUsage = null
+
+				if (monthlyCheck) {
+					const usageController = controller = new AbortController();
+					controllers.push(usageController)
+					const startDateOfMonth = formatDate(startOfMonth, 'YYYY-mm-dd');
+					const usageResponse = await fetch(`${API_USAGE_ENDPOINT}?start_date=${startDateOfMonth}&end_date=${endDate}`, { signal: usageController.signal, ...config });
+					monthlyUsage = await usageResponse.json();
+				}
+
+				let totalUsage = null
+
+				if (totalCheck) {
+					const totalController = controller = new AbortController();
+					controllers.push(totalController)
+					const totalResponse = await fetch(`${API_USAGE_ENDPOINT}?start_date=${startDateOfYear}&end_date=${endDate}`, { signal: totalController.signal, ...config });
+					totalUsage = await totalResponse.json();
+				}
+
+				let isGPT4 = false
+
+				if (typeCheck) {
+					const typesController = new AbortController();
+					controllers.push(typesController)
+					const typesResponse = await fetch(API_RATE_LMITES, { signal: typesController.signal, ...config });
+					const types = await typesResponse.json();
+					isGPT4 = types['gpt-4'] || types['gpt-4-32k']
+				}
+
 
 				if (isGPT4) console.log('GPT-4:', key)
 
 				activeRequests--;
 				return {
-					key,
-					usage: (usage.total_usage / 100).toFixed(2),
+					key: _key,
+					total: totalCheck ? (totalUsage.total_usage / 100).toFixed(2) : '--',
+					usage: monthlyCheck ? `$${(monthlyUsage.total_usage / 100).toFixed(2)}` : '--',
 					balance: Math.round(balance.hard_limit_usd),
-					type: isGPT4 ? 'GPT-4' : 'GPT-3.5',
+					type: typeCheck ? (isGPT4 ? 'GPT-4' : 'GPT-3.5') : '--',
+					delinquent: balance.delinquent,
 					expires: formatDate(new Date(balance.access_until * 1000), 'YYYY/mm/dd')
 				};
 			} catch (error) {
 				console.warn(`Failed to fetch data for key ${key}`, error);
 				activeRequests--;
-				return { key };
+				return { key: _key };
 			}
 
 		}
@@ -509,13 +645,13 @@ sans-serif;color:white;
 		function addResultToTable(result) {
 			if (!result.balance) {
 				keyCounter++;
-				let row = `<tr style="background-color:#efbbbb;"><td>${keyCounter}</td><td>${result.key}</td><td colspan="4">${isEn ? 'Invalid Key' : '无效 Key'}</td></tr>`;
+				let row = `<tr style="background-color:${cancel ? 'rgb(232 172 71 / 41%)' : '#efbbbb'};"><td>${keyCounter}</td><td>${result.key}</td><td colspan="6">${cancel ? (isEn ? 'Query cancelled' : '已取消查询') : (isEn ? 'Invalid Key' : '无效 Key')}</td></tr>`;
 				$("#resultBody").innerHTML += row;
 			} else {
 				if (result.balance > 0) {
 					validKeys.push(result);
 					keyCounter++;
-					let row = `<tr><td>${keyCounter}</td><td>${result.key}</td><td>${result.type}</td><td>${'$' + result.usage}</td><td>${'$' + result.balance}</td><td>${result.expires}</td></tr>`;
+					let row = `<tr style="${result.delinquent ? 'background-color:rgb(239 216 187 / 43%)' : ''}"><td>${keyCounter}</td><td>${result.key}</td><td>${result.type}</td><td>${result.total}</td><td>${result.usage}</td><td>${'$' + result.balance}</td><td>${result.delinquent ? (isEn ? 'Yes' : '是') : (isEn ? 'No' : '否')}</td><td>${result.expires}</td></tr>`;
 					$("#resultBody").innerHTML += row;
 				} else {
 					invalidKeys.push(result);
@@ -527,7 +663,7 @@ sans-serif;color:white;
 			if (isEnd) {
 				invalidKeys.forEach((invalidKey, index) => {
 					keyCounter++;
-					let row = `<tr><td>${keyCounter}</td><td>${invalidKey.key}</td><td>${invalidKey.type}</td><td>${'$' + invalidKey.usage}</td><td>${'$' + invalidKey.balance}</td><td>${invalidKey.expires}</td></tr>`;
+					let row = `<tr><td>${keyCounter}</td><td>${invalidKey.key}</td><td>${invalidKey.type}</td><td>${invalidKey.total}</td><td>${invalidKey.usage}</td><td>${'$' + invalidKey.balance}</td><td>${invalidKey.delinquent ? (isEn ? 'Yes' : '是') : (isEn ? 'No' : '否')}</td><td>${invalidKey.expires}</td></tr>`;
 					$("#resultBody").innerHTML += row;
 				});
 			}
@@ -562,17 +698,22 @@ sans-serif;color:white;
 
 		function updateLanguageTexts() {
 			$("#title").textContent = isEn ? 'OpenAI API Key Check' : 'OpenAI API余额查询(批量)';
-			$("#keys").setAttribute('placeholder', isEn ? 'Enter API keys, one per line' : '在这里输入API密钥，每行一个，同时支持格式: 账号;密码;Key ');
-			$("#submit").textContent = isEn ? 'Check' : '查    询';
-			$("#resultTitle").textContent = isEn ? 'Results:' : '查询结果：';
+			$("#keys").setAttribute('placeholder', isEn ? 'Enter API keys, one per line' : '在这里输入API密钥，每行一个');
+			$("#submit").textContent = isEn ? 'Check' : '检查';
+			$("#resultTitle").textContent = isEn ? 'Results:' : '结果：';
 			$("#keyHeader").textContent = isEn ? 'No.' : '序号';
 			$("#typeHeader").textContent = isEn ? 'Type' : '类型';
-			$("#usageHeader").textContent = isEn ? 'Usage' : '使用量';
+			$("#totalHeader").textContent = isEn ? 'Total Usage' : '总使用量';
+			$("#usageHeader").textContent = isEn ? ' Monthly Usage' : '当月用量';
 			$("#balanceHeader").textContent = isEn ? 'Credit' : '总额度';
+			$('#delinquentHeader').textContent = isEn ? 'Delinquent' : '欠费'
 			$("#expiresHeader").textContent = isEn ? 'Expires' : '有效期';
 			$("#proxySwitch").nextElementSibling.textContent = isEn ? 'Use Proxy' : '使用代理';
 			$("#download").textContent = isEn ? 'Download' : '下载';
 			$("#capture").textContent = isEn ? 'Save Capture' : '保存截图';
+			$('label[for="typeCheckSwitch"]').textContent = isEn ? 'CheckType' : '检查类型';
+			$('label[for="totalCheckSwitch"]').textContent = isEn ? 'CheckTotalUsage' : '总使用量';
+			$('label[for="monthlyCheckSwitch"]').textContent = isEn ? 'CheckMonthlyUsage' : '当月用量';
 		}
 
 		function saveImage() {
