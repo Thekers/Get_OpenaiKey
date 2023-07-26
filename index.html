@@ -4,6 +4,330 @@
 <title>OpenAI API Key Check</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+
+.contents {
+    width: 100%;
+    max-width: 1600px;
+    margin: auto;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.63);
+}
+
+.custom-style {
+      font-family: "微软雅黑";
+      color: white;
+    }
+
+.btn-plain{ 
+background-color: transparent;
+ border: none; color: #333;
+ font-size: 16px; cursor: pointer;
+ } 
+.btn-plain:hover { color: #666; }
+
+
+.form-control {
+  font-family: inherit;
+  font-size: 15px;
+  display: block;
+  width: 100%;
+  height: calc(2.5rem + 80px);
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:hover,
+.form-control:active,
+.form-control:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-control::-webkit-input-placeholder {
+  color: #999;
+}
+
+.form-control::-moz-placeholder {
+  color: #999;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #999;
+}
+
+.form-control::-ms-input-placeholder {
+  color: #999;
+}
+
+.form-control::placeholder {
+  color: #999;
+}
+
+		body {
+			
+    background: url('https://pic3.zhimg.com/v2-a28dea49b2c0ed8ba1eb5145ff88b392_r.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-color: #f5f5f5;
+
+			padding: 20px;
+			max-width: 1200px;
+			margin: auto;
+			//background: #FFF;
+			border-radius: 15px;
+			font-size: 16px;
+			font-family: Consolas, "Courier New", Courier, FreeMono, monospace;
+		}
+
+h1 {
+    text-align: center;
+    font-size: 60px;
+    margin-bottom: 50px;
+}
+.text-gradient {
+    background-image: linear-gradient(to right, #4299e5, #00c458);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.text-gradient {
+  animation: gradient-animation 2s linear infinite;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+@keyframes gradient-animation {
+  from {background-image: linear-gradient(to right, #4299e5, #00c458);}
+  to {background-image: linear-gradient(to right, #00c458, #4299e5);}
+}
+
+
+		#langSwitch {
+			float: right;
+		}
+
+		textarea {
+			resize: none;
+			overflow-y: auto;
+			line-height: 22px;
+			min-height: 40px;
+			max-height: 300px;
+			padding: 6px 12px;
+			box-sizing: border-box;
+			border: 2px solid gray;
+			border-radius: 4px;
+			font-size: 16px;
+		}
+
+		.tool {
+			display: flex;
+			align-items: flex-end;
+			justify-content: space-between;
+			margin-bottom: 10px;
+			user-select: none;
+		}
+
+		.custom-switch {
+			display: flex;
+			align-items: center;
+		}
+
+		.tool input {
+			margin: 0 8px 0 0;
+		}
+
+		.tool label,
+		.tool input,
+		.custom-switch {
+			cursor: pointer;
+		}
+
+		.btn {
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+			margin-top: 10px;
+			height: 40px;
+			min-width: 100px;
+			padding: 0 20px;
+			box-sizing: border-box;
+		}
+
+		.btn:hover {
+			opacity: .8;
+		}
+
+		.btn-primary {
+			background-color: #007bff;
+			color: white;
+		}
+
+		.btn-plain {
+			background-color: #FFF;
+			border: 1px solid transparent;
+			border-color: #dcdee2;
+			border-radius: 3px;
+			line-height: 1.5;
+			transition: color .2s linear, background-color .2s linear, border .2s linear, box-shadow .2s linear, -webkit-box-shadow .2s linear;
+			outline: 0;
+			color: #515a6e;
+			font-size: 14px;
+			font-weight: 400;
+			cursor: pointer;
+		}
+
+		.btn-plain:hover {
+			color: #57a3f3;
+			background-color: #fff;
+			border-color: #57a3f3;
+		}
+
+		.btn-secondary {
+			background-color: #6c757d;
+			color: white;
+		}
+
+		.btn-success {
+			background-color: #28a745;
+			color: white;
+		}
+
+		.table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-responsive {
+  overflow: auto;
+}
+
+.table th,
+.table td {
+  padding: 15px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.table th {
+  background-color: #710f94;
+  color: white;
+  font-weight: bold; /* 加粗表头字体 */
+}
+
+/* 奇数行淡紫色背景 */
+.table-striped tbody tr:nth-of-type(odd) { 
+    background-color: #00b894; 
+}
+
+/* 偶数行淡粉色背景 */
+.table-striped tbody tr:nth-of-type(even) { 
+    background-color: #a45ae4de; 
+}
+
+
+label[for="proxySwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+
+label[for="typeCheckSwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+label[for="totalCheckSwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+label[for="monthlyCheckSwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+label[for="typeCheckSwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+label[for="allCheckSwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+label[for="delinquentCheckSwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+label[for="otherCheckSwitch"] {
+  font-family: "微软雅黑", sans-serif;
+  color: white;
+}
+
+
+#resultTitle{
+font-family:"微软雅黑",
+sans-serif;color:white;
+}
+
+#process{
+font-family:"微软雅黑",
+sans-serif;color:white;
+}
+
+
+
+
+		#langSwitch {
+			cursor: pointer;
+		}
+
+		#langSwitch:hover {
+			opacity: .6;
+		}
+
+		#purchase {
+			display: inline-block;
+			line-height: 40px;
+			text-decoration: none;
+		}
+
+		#result-tool {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 40px;
+			margin-top: 40px;
+		}
+
+		#result-tool_rt {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+		}
+
+		#capture {
+			margin-left: 6px;
+		}
+
+		#resultTitle {
+			font-weight: bold;
+		}
+
+		#submit {
+			margin-right: 8px;
+		}
+	</style>
+<script>/*
+
 <style>body{padding:20px;max-width:1340px;margin:auto;background:#fff;border-radius:15px;font-size:16px;font-family:Consolas,"Courier New",Courier,FreeMono,monospace}#langSwitch{float:right}textarea{resize:none;overflow-y:auto;line-height:22px;min-height:40px;max-height:300px;padding:6px 12px;box-sizing:border-box;border:2px solid gray;border-radius:4px;font-size:16px}.tool{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:10px;user-select:none}.custom-switch{display:flex;align-items:center}.tool input{margin:0 8px 0 0}.custom-switch,.tool input,.tool label{cursor:pointer}.btn{border:none;border-radius:5px;font-size:16px;cursor:pointer;margin-top:10px;height:40px;min-width:100px;padding:0 20px;box-sizing:border-box}.btn:hover{opacity:.8}.btn-primary{background-color:#007bff;color:#fff}.btn-plain{background-color:#fff;border:1px solid transparent;border-color:#dcdee2;border-radius:3px;line-height:1.5;transition:color .2s linear,background-color .2s linear,border .2s linear,box-shadow .2s linear,-webkit-box-shadow .2s linear;outline:0;color:#515a6e;font-size:14px;font-weight:400;cursor:pointer}.btn-plain:hover{color:#57a3f3;background-color:#fff;border-color:#57a3f3}.btn-secondary{background-color:#6c757d;color:#fff}.btn-success{background-color:#28a745;color:#fff}.table{width:100%;border-collapse:collapse}.table-responsive{overflow:auto;margin-top:5px}.table td,.table th{padding:15px;border:1px solid #ddd;text-align:center}.table-striped tbody tr:nth-of-type(odd){background-color:#f2f2f2}#langSwitch{cursor:pointer}#langSwitch:hover{opacity:.6}#purchase{display:inline-block;line-height:40px;text-decoration:none}#result-tool{display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center;min-height:40px;margin-top:40px}#result-tool_rt{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap}#download{margin-right:6px;margin-top:5px;margin-bottom:5px}#capture{margin-top:5px;margin-bottom:5px}#resultTitle{font-weight:700}#submit{margin-right:8px}.check-box{display:inline-flex;align-items:center;padding:0 8px;height:22px;font-size:14px;border:1px dashed #e4e4e4;border-radius:2px;margin-right:8px;cursor:pointer;user-select:none;margin-top:5px;margin-bottom:5px}.check-box>input,.check-box>label{cursor:pointer}.check-box:hover{border-color:#57a3f3}</style>
 <script>/*
  *   You can replace the following code with whatever you would like
@@ -21,8 +345,8 @@ window.calc = function(els) {
 };
 </script></head>
 <body>
-<div>
-<h2 id="title" style="text-align:center">OpenAI API 密钥检查</h2>
+<div  class="contents">
+<h1 id="title" class="text-3xl font-semibold text-center mb-8 text-gradient" style="font-size: 45px;text-align: center;">OpenAI API Key Check</h1>
 <div class="tool">
 <div class="custom-control custom-switch">
 <input type="checkbox" id="proxySwitch" checked="checked">
@@ -32,13 +356,17 @@ window.calc = function(els) {
 <path d="M446.857143 616q-0.571429 1.714286-7.142857 2.857143t-18-6.571429l-11.428571-5.142857q-25.142857-11.428571-49.714286-28-4-2.857143-23.428571-18t-21.714286-16.285714q-38.285714 58.857143-76.571429 103.428571-46.285714 54.285714-60 62.857143-2.285714 1.142857-11.142857 2.285714t-10.571429 0q3.428571-2.285714 46.857143-52.571429 12-13.714286 48.857143-65.714286t44.857143-67.428571q9.714286-17.142857 29.142857-56.285714t20.571429-44.285714q-4.571429-0.571429-62.857143 18.857143-4.571429 1.142857-15.714286 4.285714t-19.714286 5.428571-9.714286 2.857143q-1.142857 1.142857-1.142857 6t-0.571429 5.428571q-2.857143 5.714286-17.714286 8.571429-13.142857 4-26.857143 0-10.285714-2.285714-16-12-2.285714-3.428571-2.857143-13.142857 3.428571-1.142857 14-2.857143t16.857143-3.428571q33.142857-9.142857 60-18.285714 57.142857-20 58.285714-20 5.714286-1.142857 24.571429-11.142857t25.142857-12.285714q5.142857-1.714286 12.285714-4.571429t8.285714-3.142857 3.428571 2.857143q1.142857 6.857143-0.571429 18.857143 0 1.142857-7.142857 15.428571t-15.142857 30.571429-9.714286 19.142857q-14.285714 28.571429-44 74.857143l36.571429 16q6.857143 3.428571 42.571429 18.285714t38.571429 16q2.285714 0.571429 6 14.571429t2.571429 17.428571zm-117.142857-277.714286q1.714286 8.571429-2.285714 16-6.857143 13.142857-28.571429 21.714286-17.142857 6.857143-34.285714 6.857143-14.857143-1.714286-28-14.857143-8-8.571429-10.285714-23.428571l0.571429-1.714286q1.714286 1.714286 11.142857 2.857143t15.142857 0 33.142857-9.142857q20.571429-6.857143 31.428571-8 9.714286 0 12 9.714286zm398.857143 73.714286l36 129.714286-79.428571-24zm-633.142857 457.142857l396.571429-132.571429 0-589.714286-396.571429 133.142857 0 589.142857zm709.142857-181.142857l58.285714 17.714286-103.428571-375.428571-57.142857-17.714286-123.428571 306.285714 58.285714 17.714286 25.714286-62.857143 120.571429 37.142857zm-287.428571-549.714286l327.428571 105.142857 0-217.142857zm177.714286 756l90.285714 7.428571-30.857143 91.428571-22.857143-37.714286q-74.285714 47.428571-157.714286 61.714286-33.142857 6.857143-52 6.857143l-48 0q-45.142857 0-114-22.285714t-104.857143-48.571429q-4.571429-4-4.571429-9.142857 0-4.571429 2.857143-7.714286t7.428571-3.142857q2.285714 0 10.285714 4.285714t17.428571 9.428571 11.714286 6.285714q41.714286 21.142857 91.142857 35.142857t90 14q54.285714 0 95.428571-8.285714t89.714286-28.857143q8.571429-4 17.428571-8.857143t19.428571-10.857143 16.285714-9.428571zm256-616.571429l0 616.571429-442.285714-140.571429q-8 3.428571-214.285714 72.857143t-210.285714 69.428571q-7.428571 0-10.285714-7.428571 0-0.571429-0.571429-1.714286l0-616q1.714286-5.142857 2.285714-5.714286 2.857143-3.428571 11.428571-6.285714 60.571429-20 85.142857-28.571429l0-219.428571 318.857143 113.142857q1.142857 0 91.714286-31.428571t180.571429-62 92.285714-30.571429q11.428571 0 11.428571 12l0 238.857143z" p-id="2393"></path>
 </svg>
 </div>
-<textarea id="keys" style="width: 100%; height: 51px;" rows="1" autocomplete="on" autofocus="" placeholder="在这里输入API密钥，每行一个(格式：账号----密码----密钥)"></textarea>
+<textarea id="keys" style="width: 100%; height: 122px;" rows="1" autocomplete="on" autofocus="" placeholder="在这里输入API密钥，每行一个(格式：账号----密码----密钥)">slydie69@suppotrz.com;IN92yIjeeM;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;sess-2LiR0hrR5hihmF9bgvcvLnsutoYy9UXcNXSCNquX
+vjxasfxz@igeekmagz.pw;BH82cc0zNF;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;sess-ht7G29HDJVn2u7ayETAxcV33kXcOpBguAaafHO8g
+theheleancrew@yonaki.xyz;gItLlUFud;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;sess-dHR8EWBwxgY5WHa5bAimMkvKMnSLNNEaW5m1HMAs
+ehsomp1@visiteastofengland.org;CsImrAIKj;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;sess-BmYih3TzDzC0TyODz7YXKbNtFhPMpZxUQ7kDysfu
+tkloiber@breaksmedia.com;ttJK5X62;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;sess-JcF5tmdF0ArZD0L5fP0PCeVtKefGmLxrSNfb0iBp</textarea>
 <br>
 <button id="submit" class="btn btn-primary">检查</button>
 <div id="result-tool">
 <div class="result-tool_lt">
 <span id="resultTitle">结果：</span>
-<span id="process">0/0</span>
+<span id="process">5/5</span>
 </div>
 <div id="result-tool_rt">
 <div class="check-box">
@@ -83,8 +411,7 @@ window.calc = function(els) {
 <th id="expiresHeader">有效期</th>
 </tr>
 </thead>
-<tbody id="resultBody">
-</tbody>
+<tbody id="resultBody"><tr style="background-color:rgb(239 216 187 / 43%)"><td>1</td><td>sk-VVe2********Pf3T</td><td>GPT-3.5</td><td>$13.17</td><td>$1.39</td><td>$120</td><td>$6.78</td><td>2023/09/01</td></tr><tr style="background-color:#efbbbb;"><td>2</td><td>sk-tLBv********E7Bc</td><td colspan="6">无效 Key</td></tr><tr style="background-color:rgb(239 216 187 / 43%)"><td>3</td><td>sk-TPcP********BDvR</td><td>GPT-3.5</td><td>$13.02</td><td>$1.34</td><td>$120</td><td>$6.68</td><td>2023/09/01</td></tr><tr style=""><td>4</td><td>sk-6fsz********b5D4</td><td>GPT-3.5</td><td>$1.66</td><td>$1.63</td><td>$120</td><td>否</td><td>2023/09/01</td></tr><tr style=""><td>5</td><td>sk-XfWi********JMx3</td><td>GPT-3.5</td><td>$1.90</td><td>$1.90</td><td>$120</td><td>否</td><td>2023/10/01</td></tr></tbody>
 </table>
 </div>
 </div>
