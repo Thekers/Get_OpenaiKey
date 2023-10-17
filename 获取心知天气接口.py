@@ -14,8 +14,9 @@ if __name__ == "__main__":
     api_key = "SS1bl-Np_N8JKlArP"  # 替换为你的知心网API密钥
     location = "hangzhou"  # 你想查询的地点
     weather_data = get_weather(api_key, location)
+    print(weather_data)
     if weather_data:
         for day in weather_data:
-            print(f"{day['date']}：{day['text_day']}，{day['low']}℃ ~ {day['high']}℃")
+            print(f"{day['date']}：{day['text_day']} ~ {day['text_night']}，{day['low']}℃ ~ {day['high']}℃")
     else:
         print("无法获取天气数据")
