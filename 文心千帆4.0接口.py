@@ -12,7 +12,7 @@ def main():
         "messages": [
             {
                 "role": "user",
-                "content": "杭州明天天气"
+                "content": "北京明天天气"
             },
         ]
     })
